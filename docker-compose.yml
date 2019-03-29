@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  sa-mp-dev-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    
+  pawn-fiddle:
+    build: https://github.com/samp-dev/fiddle.git
+    restart: always
+    environment:
+      - VIRTUAL_HOST=fiddle.sa-mp.dev
+      - APP_ID=pawnlang-fiddle
+      - PORT=3000
+      - LOG_LEVEL=info
+      - SESSION_SECRET=
+      - RECAPTCHA_SECRET_KEY=
+      - REACT_APP_RECAPTCHA_KEY=
+    volumes:
+      - ./fiddles/:/usr/src/app/fiddles/
+    depends_on:
+      - sa-mp-dev-proxy
