@@ -19,6 +19,8 @@ services:
       - SESSION_SECRET=
       - RECAPTCHA_SECRET_KEY=
       - REACT_APP_RECAPTCHA_KEY=
+    ports:
+      - 3000:3000
     volumes:
       - ./fiddles/:/usr/src/app/fiddles/
     depends_on:
